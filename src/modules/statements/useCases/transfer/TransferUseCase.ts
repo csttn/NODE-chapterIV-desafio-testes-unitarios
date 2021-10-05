@@ -40,10 +40,6 @@ export class TransferUseCase {
       user_id,
       with_statement: true,
     });
-    const balanceUserDestinationTranfer = await this.statementsRepository.getUserBalance({
-      user_id: transfer_destination_user_id,
-      with_statement: true,
-    });
 
     if (amount <= 0) {
       throw new TransferError.InvalidAmount();
@@ -57,7 +53,7 @@ export class TransferUseCase {
       await this.statementsRepository.create({
         user_id,
         type: OperationType.TRANSFER,
-        amount,
+        amount: Number(amount),
         description,
       });
 
@@ -65,7 +61,7 @@ export class TransferUseCase {
       await this.statementsRepository.create({
         user_id: transfer_destination_user_id,
         type: OperationType.RECEIVE_TRANFER,
-        amount,
+        amount: Number(amount),
         description,
       });
 

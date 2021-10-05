@@ -3,7 +3,6 @@ import { Statement } from "../entities/Statement";
 import { ICreateStatementDTO } from "../useCases/createStatement/ICreateStatementDTO";
 import { IGetBalanceDTO } from "../useCases/getBalance/IGetBalanceDTO";
 import { IGetStatementOperationDTO } from "../useCases/getStatementOperation/IGetStatementOperationDTO";
-import { OperationType } from './../entities/Statement';
 import { IStatementsRepository } from "./IStatementsRepository";
 
 export class StatementsRepository implements IStatementsRepository {
@@ -50,22 +49,21 @@ export class StatementsRepository implements IStatementsRepository {
 
     const balance = statement.reduce((acc, operation) => {
       if (
-        operation.type === OperationType.DEPOSIT ||
-        operation.type === OperationType.RECEIVE_TRANFER
+        operation.type === 'deposit' ||
+        operation.type === 'receive_transfer'
       ) {
-        return acc + operation.amount;
+        return acc + Number(operation.amount);
       } else {
-        return acc - operation.amount;
+        return acc - Number(operation.amount);
       }
     }, 0);
-
+    
     if (with_statement) {
       return {
         statement,
         balance,
       };
     }
-
     return { balance };
   }
 }
