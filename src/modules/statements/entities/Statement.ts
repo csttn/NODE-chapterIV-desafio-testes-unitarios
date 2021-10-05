@@ -4,15 +4,17 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-
 import { User } from "../../users/entities/User";
+
 
 export enum OperationType {
   DEPOSIT = "deposit",
   WITHDRAW = "withdraw",
+  TRANSFER = "transfer",
+  RECEIVE_TRANFER = "receive_transfer"
 }
 
 @Entity("statements")
